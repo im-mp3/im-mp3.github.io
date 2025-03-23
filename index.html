@@ -66,26 +66,30 @@
         .arrow {
             color: inherit; /* Inherit the gradient color */
         }
-        .buttons {
-            position: fixed; /* Fix the buttons to the bottom */
-            bottom: 20px; /* Position 20px from the bottom */
-            left: 5%; /* Align to the left */
-            display: none; /* Hide buttons initially */
-            flex-direction: column; /* Arrange buttons vertically */
-            gap: 20px; /* Space buttons by 20 pixels */
+        .content {
+            flex-grow: 1; /* Allow content to grow and push the boxes down */
+            width: 100%;
+            height: 150vh; /* Increase the height to make the page longer */
         }
-        .button {
-            padding: 10px 20px;
-            font-size: 1em;
-            font-weight: bold;
-            color: #ffffff;
-            background-color: #333333;
-            border: none;
+        .box-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+            width: auto; /* Adjust width to content */
+            margin: 0 auto; /* Center horizontally */
+            margin-bottom: 20px; /* Space from bottom */
+        }
+        .box {
+            padding: 40px;
+            border: 1px solid #ffffff; /* 1px solid border */
+            background-color: transparent; /* Transparent inside */
             border-radius: 5px;
-            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.1s ease; /* Smooth transition for color and transform */
+            aspect-ratio: 1; /* Make boxes equally wide and tall */
         }
-        .button:hover {
-            background-color: #555555;
+        .box:hover {
+            transform: translateY(2px); /* Simulate press down */
         }
     </style>
 </head>
@@ -99,10 +103,16 @@
         <span class="arrow" id="arrow3">&#8595;</span>
     </div>
     <div class="content"></div>
-    <div class="buttons" id="buttons">
-        <button class="button">Button 1</button>
-        <button class="button">Button 2</button>
-        <button class="button">Button 3</button>
+    <div class="box-grid">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
     </div>
 
     <script>
@@ -115,15 +125,6 @@
                     loadingScreen.style.display = 'none';
                 }, 1000); // Give time for the transition to complete
             }, 1300); // Hide loading screen after 1.3 seconds
-        });
-
-        window.addEventListener('scroll', function() {
-            // Show buttons when fully scrolled down
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                document.getElementById('buttons').style.display = 'flex';
-            } else {
-                document.getElementById('buttons').style.display = 'none';
-            }
         });
     </script>
 </body>
