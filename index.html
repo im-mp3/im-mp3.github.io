@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>im-mp3.github.io</title>
+    <title>im-mp3.githib.io</title>
     <style>
         * {
             margin: 0;
@@ -368,23 +368,23 @@
     
     <div class="bottom-section">
         <div class="button-unit">
-            <button class="button">Cookie Clicker</button>
+            <button class="button" id="cookie-clicker">Cookie Clicker</button>
             <div class="description-box">
-                <p>Description for Cookie Clicker. Add your custom text here.</p>
+                <p>Last Updated: March 23 2025 (latest version)</p>
             </div>
         </div>
         
         <div class="button-unit">
-            <button class="button">Polytrack</button>
+            <button class="button" id="polytrack">Polytrack</button>
             <div class="description-box">
-                <p>Description for Polytrack. Add your custom text here.</p>
+                <p>Last Updated: March 23 2025 (latest version)</p>
             </div>
         </div>
         
         <div class="button-unit">
-            <button class="button">Sandboxels</button>
+            <button class="button" id="sandboxels">Sandboxels</button>
             <div class="description-box">
-                <p>Description for Sandboxels. Add your custom text here.</p>
+                <p>Last Updated: March 23 2025 (latest version)</p>
             </div>
         </div>
     </div>
@@ -427,6 +427,21 @@
             if (e.key === 'Escape' && updatesPopup.classList.contains('active')) {
                 updatesPopup.classList.remove('active');
             }
+        });
+        
+        // Game buttons functionality
+        document.getElementById('cookie-clicker').addEventListener('click', function() {
+            window.open('https://orteil.dashnet.org/cookieclicker/', '_blank');
+        });
+        
+        document.getElementById('polytrack').addEventListener('click', function() {
+            alert('Polytrack game will launch here');
+            // Replace with actual game URL when available
+            // window.open('https://polytrack-game-url.com', '_blank');
+        });
+        
+        document.getElementById('sandboxels').addEventListener('click', function() {
+            window.open('https://sandboxels.r74n.com/', '_blank');
         });
     </script>
 </body>
