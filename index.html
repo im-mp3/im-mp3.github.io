@@ -8,10 +8,52 @@
         body {
             margin: 0;
             background: linear-gradient(to bottom, #000000, #1a1a1a);
-            height: 100vh;
+            min-height: 200vh; /* Increase the height to enable scrolling */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Align items to the start */
+        }
+        .arrows {
+            position: fixed; /* Make the arrows follow the scroll */
+            top: 25vh; /* Initial position of arrows */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Adjust for exact horizontal centering */
+            text-align: center;
+            font-size: 4em; /* Increased font size for larger arrows */
+            font-weight: bold; /* Make the arrows bold */
+            color: #ffffff;
+            display: flex;
+            justify-content: center; /* Center the arrows */
+            gap: 50px; /* Space arrows by 50 pixels */
+            transition: top 0.3s ease; /* Add a transition for smooth movement */
+        }
+        .arrow {
+            color: red;
         }
     </style>
 </head>
 <body>
+    <div class="arrows">
+        <span class="arrow" id="arrow1">&#8595;</span>
+        <span class="arrow" id="arrow2">&#8595;</span>
+        <span class="arrow" id="arrow3">&#8595;</span>
+    </div>
+    <div class="content"></div>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const maxScroll = document.body.scrollHeight * 0.3;
+            const scrollPosition = window.scrollY;
+
+            if (scrollPosition <= maxScroll) {
+                const topPosition = 25 + (scrollPosition / maxScroll) * 5; // Calculate position based on scroll
+                document.querySelector('.arrows').style.top = `${topPosition}vh`;
+            } else {
+                document.querySelector('.arrows').style.position = 'absolute';
+                document.querySelector('.arrows').style.top = `${(maxScroll / window.innerHeight) * 100}vh`;
+            }
+        });
+    </script>
 </body>
 </html>
