@@ -5,126 +5,428 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>im-mp3.github.io</title>
     <style>
-        body {
+        * {
             margin: 0;
-            background: linear-gradient(to bottom, #000000, #1a1a1a);
-            min-height: 200vh; /* Increase the height to enable scrolling */
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #000000, #1a1a1a, #333333);
+            background-size: 100% 100%;
+            background-attachment: fixed;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: flex-start; /* Align items to the start */
-            overflow-x: hidden; /* Prevent horizontal scrolling */
+            justify-content: space-between;
+            min-height: 100vh;
+            overflow: hidden;
         }
-        .loading-screen {
+        
+        /* Top navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            padding: 20px 40px;
+            z-index: 10;
+        }
+        
+        .nav-link {
+            color: #f5f5f7;
+            text-decoration: none;
+            margin-right: 30px;
+            font-size: 17px;
+            font-weight: 400;
+            letter-spacing: -0.015em;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .nav-link:hover {
+            opacity: 1;
+        }
+        
+        /* Popup styles */
+        .popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 1); /* Make the background completely opaque */
-            display: flex;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 1s ease-out;
+            z-index: 100;
+            backdrop-filter: blur(5px);
         }
-        .loading-circle {
+        
+        .popup-box {
+            background: rgba(30, 30, 30, 0.95);
+            border-radius: 12px;
+            padding: 30px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-overlay.active {
+            display: flex;
+        }
+        
+        .popup-overlay.active .popup-box {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .popup-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        
+        .popup-close:hover {
+            opacity: 1;
+        }
+        
+        .popup-close:before, .popup-close:after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 24px;
+            background-color: #f5f5f7;
+            top: 0;
+            left: 50%;
+        }
+        
+        .popup-close:before {
+            transform: rotate(45deg);
+        }
+        
+        .popup-close:after {
+            transform: rotate(-45deg);
+        }
+        
+        .popup-content {
+            color: #f5f5f7;
+            text-align: center;
+            font-size: 17px;
+            line-height: 1.5;
+        }
+        
+        .arrow-container {
+            position: absolute;
+            top: 80px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .down-arrow {
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            position: relative;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        .down-arrow:before, .down-arrow:after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 40px;
+            /* Smoother gradient with more color stops */
+            background: linear-gradient(to bottom, 
+                #1e90ff 0%, 
+                #4aa3ff 15%, 
+                #72b8ff 30%, 
+                #ffa54d 70%, 
+                #ff9d33 85%,
+                #ff8c00 100%);
+            background-size: 100% 300%;
+            border-radius: 2px;
+            animation: gradientShift 5s ease-in-out infinite alternate;
+            box-shadow: 0 0 6px 1px rgba(66, 167, 245, 0.4),
+                      0 0 8px 2px rgba(255, 140, 0, 0.2);
+            filter: blur(0.3px);
+        }
+        
+        .down-arrow:before {
+            transform: rotate(45deg);
+            right: 0;
+        }
+        
+        .down-arrow:after {
+            transform: rotate(-45deg);
+            right: 25px;
+            animation-delay: 0.5s;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(15px);
+            }
+        }
+        
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 0%;
+                /* Smoother gradient in animation frames */
+                background-image: linear-gradient(to bottom, 
+                    #1e90ff 0%,
+                    #4aa3ff 15%,
+                    #72b8ff 30%,
+                    #ffa54d 70%,
+                    #ff9d33 85%,
+                    #ff8c00 100%);
+                box-shadow: 0 0 6px 1px rgba(66, 167, 245, 0.3),
+                          0 0 8px 2px rgba(255, 140, 0, 0.15);
+            }
+            50% {
+                /* Intermediate gradient with more color stops */
+                background-image: linear-gradient(to bottom, 
+                    #ff9d33 0%,
+                    #ffa54d 15%,
+                    #72b8ff 50%,
+                    #4aa3ff 85%,
+                    #1e90ff 100%);
+                box-shadow: 0 0 6px 1px rgba(255, 140, 0, 0.25),
+                          0 0 8px 2px rgba(66, 167, 245, 0.2);
+            }
+            100% {
+                background-position: 0% 100%;
+                /* Reverse gradient with more color stops */
+                background-image: linear-gradient(to bottom, 
+                    #ff8c00 0%,
+                    #ff9d33 15%,
+                    #ffa54d 30%,
+                    #72b8ff 70%,
+                    #4aa3ff 85%,
+                    #1e90ff 100%);
+                box-shadow: 0 0 6px 1px rgba(255, 140, 0, 0.3),
+                          0 0 8px 2px rgba(66, 167, 245, 0.15);
+            }
+        }
+        
+        /* Subtle ambient glow that blends with the background */
+        .ambient-glow {
+            position: absolute;
             width: 80px;
             height: 80px;
-            border: 8px solid rgba(255, 255, 255, 0.3);
-            border-top: 8px solid #ffffff;
             border-radius: 50%;
-            animation: spin 1.3s linear infinite;
+            background: radial-gradient(circle, rgba(30, 144, 255, 0.08), rgba(255, 140, 0, 0.08), transparent 80%);
+            mix-blend-mode: screen;
+            filter: blur(15px);
+            opacity: 0.6;
+            animation: subtleGlowPulse 4s ease-in-out infinite alternate;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        
+        @keyframes subtleGlowPulse {
+            0% {
+                opacity: 0.4;
+                transform: scale(1);
+                background: radial-gradient(circle, rgba(30, 144, 255, 0.08), rgba(255, 140, 0, 0.06), transparent 80%);
+            }
+            100% {
+                opacity: 0.6;
+                transform: scale(1.2);
+                background: radial-gradient(circle, rgba(255, 140, 0, 0.08), rgba(30, 144, 255, 0.06), transparent 80%);
+            }
         }
-        .arrows {
-            position: absolute; /* Position arrows statically */
-            top: 25vh; /* Position 25% from the top */
-            width: 100%; /* Take full width */
-            text-align: center;
-            font-size: 6em; /* Increased font size for larger arrows */
-            font-weight: bold; /* Make the arrows bold */
-            display: flex;
-            justify-content: center; /* Center arrows horizontally */
-            align-items: center;
-            gap: 50px; /* Space arrows */
-            background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: rainbow 3s infinite linear;
-            background-size: 400% 400%;
-        }
-        @keyframes rainbow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .arrow {
-            color: inherit; /* Inherit the gradient color */
-        }
-        .content {
-            flex-grow: 1; /* Allow content to grow and push the boxes down */
-            width: 100%;
-            height: 150vh; /* Increase the height to make the page longer */
-        }
-        .box-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-gap: 10px;
-            width: auto; /* Adjust width to content */
-            margin: 0 auto; /* Center horizontally */
-            margin-bottom: 20px; /* Space from bottom */
-        }
-        .box {
+        
+        /* Bottom section with buttons and descriptions */
+        .bottom-section {
+            margin-top: auto;
             padding: 40px;
-            border: 1px solid #ffffff; /* 1px solid border */
-            background-color: transparent; /* Transparent inside */
-            border-radius: 5px;
-            text-align: center;
-            transition: background-color 0.3s ease, transform 0.1s ease; /* Smooth transition for color and transform */
-            aspect-ratio: 1; /* Make boxes equally wide and tall */
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
         }
-        .box:hover {
-            transform: translateY(2px); /* Simulate press down */
+        
+        /* Button and description combined unit */
+        .button-unit {
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            margin: 0 10px;
+        }
+        
+        .button {
+            padding: 16px 30px;
+            border: none;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            background: rgba(30, 30, 30, 0.8);
+            color: #f5f5f7;
+            font-size: 17px;
+            font-weight: 700; /* Changed from 400 to 700 to make text bold */
+            letter-spacing: -0.015em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            text-align: center;
+            z-index: 2;
+        }
+        
+        .button:hover {
+            background: rgba(40, 40, 40, 0.9);
+            transform: translateY(-2px);
+        }
+        
+        .button:hover + .description-box {
+            transform: translateY(-2px);
+        }
+        
+        .button:active {
+            transform: translateY(1px);
+        }
+        
+        .button:active + .description-box {
+            transform: translateY(1px);
+        }
+        
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .button:hover::before {
+            left: 100%;
+        }
+        
+        /* Connected description boxes */
+        .description-box {
+            min-height: 80px;
+            background: rgba(20, 20, 20, 0.5);
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            padding: 15px;
+            color: #cccccc;
+            font-size: 14px;
+            line-height: 1.4;
+            font-weight: 300;
+            letter-spacing: -0.01em;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: all 0.3s ease;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .description-box p {
+            margin: 0;
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
-    <div class="loading-screen" id="loading-screen">
-        <div class="loading-circle"></div>
+    <div class="top-nav">
+        <a class="nav-link">Home</a>
+        <a class="nav-link" id="updates-link">Updates</a>
     </div>
-    <div class="arrows">
-        <span class="arrow" id="arrow1">&#8595;</span>
-        <span class="arrow" id="arrow2">&#8595;</span>
-        <span class="arrow" id="arrow3">&#8595;</span>
+    
+    <div class="arrow-container">
+        <div class="ambient-glow"></div>
+        <div class="down-arrow"></div>
     </div>
-    <div class="content"></div>
-    <div class="box-grid">
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
+    
+    <div class="bottom-section">
+        <div class="button-unit">
+            <button class="button">Cookie Clicker</button>
+            <div class="description-box">
+                <p>Description for Cookie Clicker. Add your custom text here.</p>
+            </div>
+        </div>
+        
+        <div class="button-unit">
+            <button class="button">Polytrack</button>
+            <div class="description-box">
+                <p>Description for Polytrack. Add your custom text here.</p>
+            </div>
+        </div>
+        
+        <div class="button-unit">
+            <button class="button">Sandboxels</button>
+            <div class="description-box">
+                <p>Description for Sandboxels. Add your custom text here.</p>
+            </div>
+        </div>
     </div>
-
+    
+    <!-- Popup overlay -->
+    <div class="popup-overlay" id="updates-popup">
+        <div class="popup-box">
+            <div class="popup-close" id="close-popup"></div>
+            <div class="popup-content">
+                <p>coming soon</p>
+            </div>
+        </div>
+    </div>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                const loadingScreen = document.getElementById('loading-screen');
-                loadingScreen.style.opacity = '0';
-                document.body.style.overflow = 'auto'; /* Re-enable scrolling after loading */
-                setTimeout(function() {
-                    loadingScreen.style.display = 'none';
-                }, 1000); // Give time for the transition to complete
-            }, 1300); // Hide loading screen after 1.3 seconds
+        // Get DOM elements
+        const updatesLink = document.getElementById('updates-link');
+        const updatesPopup = document.getElementById('updates-popup');
+        const closePopup = document.getElementById('close-popup');
+        
+        // Show popup when Updates link is clicked
+        updatesLink.addEventListener('click', function() {
+            updatesPopup.classList.add('active');
+        });
+        
+        // Hide popup when close button is clicked
+        closePopup.addEventListener('click', function() {
+            updatesPopup.classList.remove('active');
+        });
+        
+        // Hide popup when clicking outside the popup box
+        updatesPopup.addEventListener('click', function(e) {
+            if (e.target === updatesPopup) {
+                updatesPopup.classList.remove('active');
+            }
+        });
+        
+        // Close popup when ESC key is pressed
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && updatesPopup.classList.contains('active')) {
+                updatesPopup.classList.remove('active');
+            }
         });
     </script>
 </body>
