@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>im-mp3.githib.io</title>
+    <title>im-mp3.github.io/home</title>
     <style>
         * {
             margin: 0;
@@ -30,7 +30,6 @@
             overflow: hidden;
         }
         
-        /* Top navigation */
         .top-nav {
             position: fixed;
             top: 0;
@@ -57,7 +56,6 @@
             opacity: 1;
         }
         
-        /* Popup styles */
         .popup-overlay {
             position: fixed;
             top: 0;
@@ -155,7 +153,6 @@
             position: absolute;
             width: 4px;
             height: 40px;
-            /* Smoother gradient with more color stops */
             background: linear-gradient(to bottom, 
                 #1e90ff 0%, 
                 #4aa3ff 15%, 
@@ -194,7 +191,6 @@
         @keyframes gradientShift {
             0% {
                 background-position: 0% 0%;
-                /* Smoother gradient in animation frames */
                 background-image: linear-gradient(to bottom, 
                     #1e90ff 0%,
                     #4aa3ff 15%,
@@ -206,7 +202,6 @@
                           0 0 8px 2px rgba(255, 140, 0, 0.15);
             }
             50% {
-                /* Intermediate gradient with more color stops */
                 background-image: linear-gradient(to bottom, 
                     #ff9d33 0%,
                     #ffa54d 15%,
@@ -218,7 +213,6 @@
             }
             100% {
                 background-position: 0% 100%;
-                /* Reverse gradient with more color stops */
                 background-image: linear-gradient(to bottom, 
                     #ff8c00 0%,
                     #ff9d33 15%,
@@ -231,7 +225,6 @@
             }
         }
         
-        /* Subtle ambient glow that blends with the background */
         .ambient-glow {
             position: absolute;
             width: 80px;
@@ -257,7 +250,6 @@
             }
         }
         
-        /* Bottom section with buttons and descriptions */
         .bottom-section {
             margin-top: auto;
             padding: 40px;
@@ -266,7 +258,6 @@
             justify-content: space-between;
         }
         
-        /* Button and description combined unit */
         .button-unit {
             display: flex;
             flex-direction: column;
@@ -284,7 +275,7 @@
             background: rgba(30, 30, 30, 0.8);
             color: #f5f5f7;
             font-size: 17px;
-            font-weight: 700; /* Changed from 400 to 700 to make text bold */
+            font-weight: 700;
             letter-spacing: -0.015em;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -329,7 +320,6 @@
             left: 100%;
         }
         
-        /* Connected description boxes */
         .description-box {
             min-height: 80px;
             background: rgba(20, 20, 20, 0.5);
@@ -375,7 +365,7 @@
         </div>
         
         <div class="button-unit">
-            <button class="button" id="polytrack">Polytrack</button>
+            <button class="button" id="polytrack">PolyTrack</button>
             <div class="description-box">
                 <p>Last Updated: March 23 2025 (latest version)</p>
             </div>
@@ -389,7 +379,6 @@
         </div>
     </div>
     
-    <!-- Popup overlay -->
     <div class="popup-overlay" id="updates-popup">
         <div class="popup-box">
             <div class="popup-close" id="close-popup"></div>
@@ -400,48 +389,40 @@
     </div>
     
     <script>
-        // Get DOM elements
         const updatesLink = document.getElementById('updates-link');
         const updatesPopup = document.getElementById('updates-popup');
         const closePopup = document.getElementById('close-popup');
         
-        // Show popup when Updates link is clicked
         updatesLink.addEventListener('click', function() {
             updatesPopup.classList.add('active');
         });
         
-        // Hide popup when close button is clicked
         closePopup.addEventListener('click', function() {
             updatesPopup.classList.remove('active');
         });
         
-        // Hide popup when clicking outside the popup box
         updatesPopup.addEventListener('click', function(e) {
             if (e.target === updatesPopup) {
                 updatesPopup.classList.remove('active');
             }
         });
         
-        // Close popup when ESC key is pressed
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && updatesPopup.classList.contains('active')) {
                 updatesPopup.classList.remove('active');
             }
         });
         
-        // Game buttons functionality
         document.getElementById('cookie-clicker').addEventListener('click', function() {
-            window.open('https://orteil.dashnet.org/cookieclicker/', '_blank');
+            
         });
         
         document.getElementById('polytrack').addEventListener('click', function() {
-            alert('Polytrack game will launch here');
-            // Replace with actual game URL when available
-            // window.open('https://polytrack-game-url.com', '_blank');
+            
         });
         
         document.getElementById('sandboxels').addEventListener('click', function() {
-            window.open('https://sandboxels.r74n.com/', '_blank');
+            
         });
     </script>
 </body>
