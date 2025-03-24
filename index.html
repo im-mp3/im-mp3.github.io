@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>im-mp3.github.io/home</title>
+    <title>Black Gradient with Arrow and Buttons</title>
     <style>
         * {
             margin: 0;
@@ -286,6 +286,9 @@
             width: 100%;
             text-align: center;
             z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .button:hover {
@@ -314,6 +317,7 @@
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             transition: left 0.7s ease;
+            z-index: 1;
         }
         
         .button:hover::before {
@@ -343,6 +347,15 @@
             margin: 0;
             opacity: 0.8;
         }
+        
+        .cookie-logo-img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            border-radius: 50%;
+            object-fit: cover;
+            z-index: 2;
+        }
     </style>
 </head>
 <body>
@@ -358,7 +371,10 @@
     
     <div class="bottom-section">
         <div class="button-unit">
-            <button class="button" id="cookie-clicker">Cookie Clicker</button>
+            <button class="button" id="cookie-clicker">
+                <img src="Cookie_Clicker.png" alt="Cookie" class="cookie-logo-img">
+                Cookie Clicker
+            </button>
             <div class="description-box">
                 <p>Last Updated: March 23 2025 (latest version)</p>
             </div>
@@ -383,7 +399,7 @@
         <div class="popup-box">
             <div class="popup-close" id="close-popup"></div>
             <div class="popup-content">
-                <p>coming soon</p>
+                <p>comign soon</p>
             </div>
         </div>
     </div>
@@ -414,15 +430,15 @@
         });
         
         document.getElementById('cookie-clicker').addEventListener('click', function() {
-            
+            alert("Cookie Clicker button clicked");
         });
         
         document.getElementById('polytrack').addEventListener('click', function() {
-            
+            alert("PolyTrack button clicked");
         });
         
         document.getElementById('sandboxels').addEventListener('click', function() {
-            
+            alert("Sandboxels button clicked");
         });
     </script>
 </body>
