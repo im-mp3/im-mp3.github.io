@@ -197,7 +197,7 @@
             transform: scale(1.05);
         }
 
-        /* Updated Popout Styling with Sidebar */
+        /* Further updated Popout Styling with even longer image */
         .game-popout {
             position: fixed;
             top: 0;
@@ -220,8 +220,8 @@
 
         .game-popout-content {
             position: relative;
-            width: 90%;
-            max-width: 1400px;
+            width: 94%;
+            max-width: 1600px;
             height: 60%;
             background: rgba(20, 20, 20, 0.9);
             border-radius: 15px;
@@ -241,8 +241,10 @@
         }
 
         .game-popout-image-container {
-            flex: 4; /* Increased from 3 to 4 to make image take more horizontal space */
+            flex: 5; /* Increased from 4 to 5 to make image even longer horizontally */
             height: 100%;
+            position: relative;
+            overflow: hidden;
         }
 
         .game-popout-image {
@@ -261,6 +263,7 @@
             background: rgba(30, 30, 30, 0.95);
             border-left: 1px solid rgba(255, 255, 255, 0.1);
             min-width: 250px; /* Ensures sidebar doesn't get too narrow */
+            max-width: 280px; /* Limits sidebar width to give more space to image */
         }
 
         .game-popout-title {
@@ -371,7 +374,7 @@
         </div>
     </div>
 
-    <!-- Updated Cookie Clicker Popout with Sidebar -->
+    <!-- Further updated Cookie Clicker Popout with even longer image -->
     <div class="game-popout" id="cookie-clicker-popout">
         <div class="game-popout-content">
             <div class="game-popout-image-container">
