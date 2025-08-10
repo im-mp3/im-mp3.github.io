@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ar</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A</title>
 <style>
     body {
         margin: 0;
@@ -47,6 +47,11 @@
         width: 24px;
         height: 24px;
         cursor: pointer;
+        fill: white;
+        transition: fill 0.3s ease;
+    }
+    body.light-mode .search-icon {
+        fill: black;
     }
     .search-input {
         position: absolute;
@@ -60,6 +65,7 @@
         transition: width 0.4s ease, opacity 0.4s ease;
         background-color: #333;
         color: white;
+        font-size: 1rem;
     }
     body.light-mode .search-input {
         background-color: #f1f1f1;
@@ -76,11 +82,18 @@
         border: none;
         cursor: pointer;
         padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    .theme-toggle img {
+    .theme-icon {
         width: 24px;
         height: 24px;
-        transition: opacity 0.3s ease;
+        fill: white;
+        transition: fill 0.3s ease;
+    }
+    body.light-mode .theme-icon {
+        fill: black;
     }
 </style>
 </head>
@@ -89,26 +102,63 @@
 <div class="navbar">
     <div class="navbar-left">Home</div>
     <div class="navbar-right">
-        <div class="search-container">
-            <img src="search.png" alt="Search" class="search-icon">
-            <input type="text" class="search-input" placeholder="Search...">
+        <div class="search-container" tabindex="0">
+            <!-- Inline SVG for search icon -->
+            <svg class="search-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Search icon" role="img">
+                <path d="M10 2a8 8 0 015.292 13.708l4.854 4.854-1.414 1.414-4.854-4.854A8 8 0 1110 2zm0 2a6 6 0 100 12 6 6 0 000-12z"/>
+            </svg>
+            <input type="text" class="search-input" placeholder="Search..." aria-label="Search input" />
         </div>
-        <button class="theme-toggle" onclick="toggleTheme()">
-            <img id="theme-icon" src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Light_mode_icon.svg" alt="Theme Toggle">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light/dark theme">
+            <!-- We will dynamically switch the icon here -->
+            <svg id="theme-icon" class="theme-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+                <!-- Sun icon initially -->
+                <circle cx="12" cy="12" r="5" stroke="none" fill="currentColor"></circle>
+                <g stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </g>
+            </svg>
         </button>
     </div>
 </div>
 
 <script>
+    const sunIcon = `
+        <circle cx="12" cy="12" r="5" stroke="none" fill="currentColor"></circle>
+        <g stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </g>
+    `;
+
+    const moonIcon = `
+        <path fill="currentColor" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"></path>
+    `;
+
     function toggleTheme() {
         document.body.classList.toggle("light-mode");
         document.body.classList.toggle("dark-mode");
-        
+
         const icon = document.getElementById("theme-icon");
         if (document.body.classList.contains("light-mode")) {
-            icon.src = "https://upload.wikimedia.org/wikipedia/commons/0/0b/Moon_icon.svg"; // Moon icon
+            // Show moon icon on light mode toggle
+            icon.innerHTML = moonIcon;
         } else {
-            icon.src = "https://upload.wikimedia.org/wikipedia/commons/7/7b/Light_mode_icon.svg"; // Sun icon
+            // Show sun icon on dark mode toggle
+            icon.innerHTML = sunIcon;
         }
     }
 </script>
