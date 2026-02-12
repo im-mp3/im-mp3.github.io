@@ -3,50 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix Clone (Educational)</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #1a1a1a;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 0.5rem;
+        }
+
+        nav a:hover {
+            color: #00d4ff;
+            border-bottom-color: #00d4ff;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #cccccc;
+            margin-bottom: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">NetFlix Clone</div>
-            <ul class="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">TV Shows</a></li>
-                <li><a href="#">Movies</a></li>
-                <li><a href="#">My List</a></li>
-            </ul>
-            <button class="sign-in">Sign In</button>
-        </nav>
-    </header>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Unlimited movies, TV shows, and more.</h1>
-            <p>Watch anywhere. Cancel anytime.</p>
-            <button class="get-started">Get Started</button>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="hero" id="home">
+            <h1>Welcome to My Website</h1>
+            <p>This is a modern GitHub Pages website with a sleek black background and navigation bar.</p>
         </div>
-    </section>
 
-    <section class="movies">
-        <h2>Popular on Netflix Clone</h2>
-        <div class="movie-grid">
-            <div class="movie-card">
-                <img src="https://via.placeholder.com/200x300?text=Movie+1" alt="Movie 1">
-                <p>Movie Title 1</p>
-            </div>
-            <div class="movie-card">
-                <img src="https://via.placeholder.com/200x300?text=Movie+2" alt="Movie 2">
-                <p>Movie Title 2</p>
-            </div>
-            <!-- Add more cards as needed -->
-        </div>
-    </section>
+        <section id="about">
+            <h2 style="margin-top: 3rem; margin-bottom: 1rem; color: #00d4ff;">About</h2>
+            <p>Add your content here. This website is ready to be customized with your own information and styling.</p>
+        </section>
 
-    <footer>
-        <p>&copy; 2025 Your Name. This is for educational purposes only.</p>
-    </footer>
+        <section id="projects">
+            <h2 style="margin-top: 3rem; margin-bottom: 1rem; color: #00d4ff;">Projects</h2>
+            <p>Showcase your projects and work here.</p>
+        </section>
 
-    <script src="script.js"></script>
+        <section id="contact">
+            <h2 style="margin-top: 3rem; margin-bottom: 1rem; color: #00d4ff;">Contact</h2>
+            <p>Get in touch with you through this section.</p>
+        </section>
+    </div>
 </body>
 </html>
